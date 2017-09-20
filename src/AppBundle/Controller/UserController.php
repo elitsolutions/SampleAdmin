@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     /**
-    * matches user
-    * 
     * @Route("/user", name="user_list")
     */
     public function listAction()
