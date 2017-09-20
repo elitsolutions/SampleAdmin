@@ -13,7 +13,7 @@ class UserController extends Controller
     * 
     * @Route("/user", name="user_list")
     */
-    public function indexAction()
+    public function listAction()
     {
         echo 'index';
         // return $this->render('user/index.html.twig', array(
