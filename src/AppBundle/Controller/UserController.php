@@ -15,8 +15,7 @@ class UserController extends Controller
     */
     public function listAction()
     {
-        echo 'index';
-        // return $this->render('user/index.html.twig', array(
-        // ));
+        return $this->render('user/index.html.twig', array(
+        ));
     }
 }
