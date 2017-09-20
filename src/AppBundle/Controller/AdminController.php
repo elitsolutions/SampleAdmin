@@ -16,4 +16,13 @@ class AdminController extends Controller
         return $this->render('admin/index.html.twig', array(
         ));
     }
+
+    /**
+    * @Route("/user/add", name="user_add")
+    */
+    public function addAction()
+    {
+        return $this->render('admin/form.html.twig', array(
+        ));
+    }
 }
