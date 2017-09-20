@@ -13,7 +13,7 @@ class AdminController extends Controller
     */
     public function listAction()
     {
-        return $this->render('user/index.html.twig', array(
+        return $this->render('admin/index.html.twig', array(
         ));
     }
 }
