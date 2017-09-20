@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     /**
-    * matches lucky
+    * matches user
     * 
-    * @Route("/user")
+    * @Route("/user", name="user_list")
     */
     public function indexAction()
     {
