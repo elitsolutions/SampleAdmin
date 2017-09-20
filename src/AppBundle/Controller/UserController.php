@@ -6,19 +6,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class LuckyController extends Controller
+class UserController extends Controller
 {
     /**
     * matches lucky
     * 
-    * @Route("/lucky/number")
+    * @Route("/user")
     */
-    public function numberAction()
+    public function indexAction()
     {
-        $number = mt_rand(0, 100);
-
-        return $this->render('lucky/number.html.twig', array(
-            'number' => $number,
+        return $this->render('user/index.html.twig', array(
         ));
     }
 }
