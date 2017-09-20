@@ -27,6 +27,12 @@
                         <td><a href="{{ item.href }}">Edit</a></td>
                         <td><a href="{{ item.href }}">Delete</a></td>
                     </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td>No user found. Add one</td>
+                        <td></td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
