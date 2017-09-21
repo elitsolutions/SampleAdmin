@@ -21,4 +21,10 @@ class User
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserGroup", inversedBy="users")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    private $group;
 }

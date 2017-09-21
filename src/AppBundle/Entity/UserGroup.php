@@ -21,4 +21,14 @@ class UserGroup
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="user_group")
+     */
+     private $users;
+     
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 }
