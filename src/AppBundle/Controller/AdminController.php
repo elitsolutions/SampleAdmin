@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function listAction()
     {
         // find all users
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
 
         return $this->render('admin/index.html.twig', array(
             'users' => $users
