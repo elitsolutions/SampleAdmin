@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Users;
+use AppBundle\Form\UserType;
 
 class AdminController extends Controller
 {
@@ -33,10 +34,7 @@ class AdminController extends Controller
     {
         $user = new Users();
 
-        $form = $this->createFormBuilder($user)
-        ->add('name', TextType::class)
-        ->add('save', SubmitType::class, array('label' => 'Add User'))
-        ->getForm();
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
