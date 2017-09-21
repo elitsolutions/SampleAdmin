@@ -38,7 +38,7 @@ class AdminController extends Controller
         ->getForm();
 
         return $this->render('admin/form.html.twig', array(
-            'form' => $form->createView(),
+            // 'form' => $form->createView(),
         ));
     }
 }
