@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user_group")
+ * @ORM\Table(name="user")
  */
-class UserGroup
+class Users
 {
     /**
      * @ORM\Column(type="integer")
@@ -23,12 +23,8 @@ class UserGroup
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="user_group")
+     * @ORM\ManyToOne(targetEntity="Groups", inversedBy="users")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
-     private $users;
-     
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+    private $groups;
 }
