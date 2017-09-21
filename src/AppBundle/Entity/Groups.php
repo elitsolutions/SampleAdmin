@@ -23,7 +23,7 @@ class Groups
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Users", mappedBy="groups")
+     * @ORM\OneToMany(targetEntity="Users", mappedBy="group")
      */
      private $users;
      

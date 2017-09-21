@@ -26,5 +26,25 @@ class Users
      * @ORM\ManyToOne(targetEntity="Groups", inversedBy="users")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
-    private $groups;
+    private $group;
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    public function setGroup($group)
+    {
+        $this->group = $group;
+    }
 }
