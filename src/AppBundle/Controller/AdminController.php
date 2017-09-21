@@ -32,10 +32,10 @@ class AdminController extends Controller
     {
         $user = new Users();
 
-        $form = $this->createFormBuilder($user)
-        ->add('name', TextType::class)
-        ->add('save', SubmitType::class, array('label' => 'Add User'))
-        ->getForm();
+        // $form = $this->createFormBuilder($user)
+        // ->add('name', TextType::class)
+        // ->add('save', SubmitType::class, array('label' => 'Add User'))
+        // ->getForm();
 
         return $this->render('admin/form.html.twig', array(
             // 'form' => $form->createView(),
