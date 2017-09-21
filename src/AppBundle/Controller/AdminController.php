@@ -13,7 +13,7 @@ class AdminController extends Controller
     */
     public function listAction()
     {
-        return $this->render('index.html.twig', array(
+        return $this->render('admin/index.html.twig', array(
         ));
     }
 
@@ -22,7 +22,7 @@ class AdminController extends Controller
     */
     public function addAction()
     {
-        return $this->render('form.html.twig', array(
+        return $this->render('admin/form.html.twig', array(
         ));
     }
 }
