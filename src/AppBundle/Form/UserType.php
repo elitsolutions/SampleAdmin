@@ -12,7 +12,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('group', null, array('widget' => 'single_text'))
+            ->add('group')
             ->add('save', SubmitType::class, array('label' => 'Add User'))
         ;
     }
