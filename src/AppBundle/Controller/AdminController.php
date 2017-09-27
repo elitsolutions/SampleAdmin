@@ -76,7 +76,8 @@ class AdminController extends Controller
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $em->remove($id);
+        $user = $em->getRepository(Users::class)->find($id);
+        $em->remove($user);
         $em->flush();
     
         return $this->redirectToRoute('user_list');
