@@ -1,0 +1,9 @@
+{# app/Resources/views/admin/index.html.twig #}
+{% extends 'admin/index.html.twig' %}
+
+{% block content %}
+Name: {{user.name}}<br />
+Group: {{user.group}}<br />
+<hr />
+<a href="{{ path('group_add') }}" class="btn btn-primary">Add a group</a>
+{% endblock %}

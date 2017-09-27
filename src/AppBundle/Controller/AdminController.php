@@ -20,7 +20,9 @@ class AdminController extends Controller
     public function listAction()
     {
         // find all users
-        $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
+        $users = $this->getDoctrine()
+        ->getRepository(Users::class)
+        ->findAll();
 
         return $this->render('admin/index.html.twig', array(
             'users' => $users
@@ -51,6 +53,20 @@ class AdminController extends Controller
 
         return $this->render('admin/form.html.twig', array(
             'form' => $form->createView(),
+        ));
+    }
+
+    /**
+    * @Route("/user/{id}", name="show_user", requirements={"id": "\d+"})
+    */
+    public function showAction($id)
+    {
+        $user = $this->getDoctrine()
+        ->getRepository(Users::class)
+        ->find($id);
+
+        return $this->render('admin/show.html.twig', array(
+            'user' => $user
         ));
     }
 }
