@@ -1,0 +1,31 @@
+{# app/Resources/views/admin/index.html.twig #}
+{% extends 'admin/index.html.twig' %}
+
+{% block content %}
+<table class="table table-striped">
+    <thead class="thead-default">
+        <tr>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.name }}</td>
+                <td><a href="{{ item.href }}">Edit</a></td>
+                <td><a href="{{ item.href }}">Delete</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td></td>
+                <td class="d-flex justify-content-center text-danger">No group found. Add one</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<hr />
+<a href="{{ path('group_add') }}" class="btn btn-primary">Add a group</a>
+{% endblock %}

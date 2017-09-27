@@ -1,0 +1,10 @@
+{# app/Resources/views/admin/index.html.twig #}
+{% extends 'admin/index.html.twig' %}
+
+{% block content %}
+    <h1>Add group!</h1>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
