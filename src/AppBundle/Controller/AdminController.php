@@ -86,7 +86,6 @@ class AdminController extends Controller
         }
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
     
             if ($form->isValid()) {
                 $em->persist($form);
