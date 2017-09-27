@@ -30,17 +30,21 @@ class AdminController extends Controller
     /**
     * @Route("/user/add", name="user_add")
     */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $user = new Users();
 
         $form = $this->createForm(UserType::class, $user);
 
-        // $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $task = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
     
             return $this->redirectToRoute('user_list');
         }
