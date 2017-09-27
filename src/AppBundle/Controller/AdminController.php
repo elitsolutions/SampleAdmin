@@ -42,10 +42,10 @@ class AdminController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $task = $form->getData();
+            $formData = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($task);
+            $em->persist($formData);
             $em->flush();
     
             return $this->redirectToRoute('user_list');
@@ -67,6 +67,39 @@ class AdminController extends Controller
 
         return $this->render('admin/show.html.twig', array(
             'user' => $user
+        ));
+    }
+
+    /**
+    * @Route("/user/edit/{id}", name="edit_user", requirements={"id": "\d+"})
+    */
+    public function editAction($id)
+    {
+        $request = $this->get('request');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository(Users::class)->find($id);
+        $form = $this->createForm(UserType::class, $user);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+    
+            if ($form->isValid()) {
+                $em->persist($form);
+                $em->flush();
+
+                return $this->redirectToRoute('user_list');
+            }
+        }
+
+        return $this->render('admin/form.html.twig', array(
+            'form' => $form->createView()
         ));
     }
 
