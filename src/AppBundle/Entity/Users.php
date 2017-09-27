@@ -23,6 +23,7 @@ class Users
     private $name;
 
     /**
+     * @var \AppBundle\Entity\Groups
      * @ORM\ManyToOne(targetEntity="Groups", inversedBy="users")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
