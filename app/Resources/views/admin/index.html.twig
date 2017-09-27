@@ -10,8 +10,7 @@
     <div class="container">
         <h1 class="d-flex justify-content-center">Welcome to Sample Admin page!</h1>
         <hr />
-        <a href="">Groups</a>
-        <a href="">Users</a>
+        <a href="{{ path('group_list') }}">Groups</a> | <a href="{{ path('user_list') }}">Users</a>
         <hr />
         {% block content %}
         <table class="table table-striped">
