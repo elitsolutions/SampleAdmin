@@ -86,7 +86,10 @@ class AdminController extends Controller
         }
 
         if ($request->isMethod('POST')) {
-    
+
+            throw $this->createNotFoundException(
+                'post method'
+            );
             if ($form->isValid()) {
                 $formData = $form->getData();
                 $em->persist($formData);
