@@ -17,6 +17,7 @@
             <thead class="thead-default">
                 <tr>
                 <th>Name</th>
+                <th>Group</th>
                 <th>Edit</th>
                 <th>Delete</th>
                 </tr>
@@ -25,6 +26,7 @@
                 {% for user in users %}
                     <tr>
                         <td>{{ user.name }}</td>
+                        <td><a href="{{ user.group }}">{{ user.group }}</a></td>
                         <td><a href="{{ user.id }}">Edit</a></td>
                         <td><a href="{{ user.id }}">Delete</a></td>
                     </tr>
