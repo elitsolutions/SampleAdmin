@@ -30,17 +30,21 @@ class GroupController extends Controller
     /**
     * @Route("/group/add", name="group_add")
     */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $group = new Groups();
 
         $form = $this->createForm(GroupType::class, $group);
 
-        // $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $task = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
     
             return $this->redirectToRoute('group_list');
         }
