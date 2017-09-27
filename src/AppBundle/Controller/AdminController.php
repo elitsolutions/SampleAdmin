@@ -87,10 +87,10 @@ class AdminController extends Controller
 
         if ($request->isMethod('POST')) {
 
-            throw $this->createNotFoundException(
-                'post method'
-            );
             if ($form->isValid()) {
+                throw $this->createNotFoundException(
+                    'valid'
+                );
                 $formData = $form->getData();
                 $em->persist($formData);
                 $em->flush();
