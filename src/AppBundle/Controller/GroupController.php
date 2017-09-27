@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Groups;
-use AppBundle\Form\UserType;
+use AppBundle\Form\GroupType;
 
 class GroupController extends Controller
 {
@@ -22,7 +22,7 @@ class GroupController extends Controller
         // find all users
         $groups = $this->getDoctrine()->getRepository(Groups::class)->findAll();
 
-        return $this->render('admin/index.html.twig', array(
+        return $this->render('group/index.html.twig', array(
             'groups' => $groups
         ));
     }
@@ -45,7 +45,7 @@ class GroupController extends Controller
             return $this->redirectToRoute('group_list');
         }
 
-        return $this->render('admin/form.html.twig', array(
+        return $this->render('group/form.html.twig', array(
             'form' => $form->createView(),
         ));
     }
