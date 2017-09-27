@@ -73,10 +73,8 @@ class AdminController extends Controller
     /**
     * @Route("/user/edit/{id}", name="edit_user", requirements={"id": "\d+"})
     */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
-        $request = $this->get('request');
-
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository(Users::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
