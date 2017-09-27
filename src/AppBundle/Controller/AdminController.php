@@ -69,4 +69,16 @@ class AdminController extends Controller
             'user' => $user
         ));
     }
+
+    /**
+    * @Route("/user/delete/{id}", name="delete_user", requirements={"id": "\d+"})
+    */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($id);
+        $em->flush();
+    
+        return $this->redirectToRoute('user_list');
+    }
 }
