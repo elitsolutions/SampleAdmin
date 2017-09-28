@@ -15,7 +15,7 @@
         {% for user in groups.users %}
             <tr>
                 <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
-                <td><a href="{{ path('remove_user', {'id': user.id}) }}">Remove user from group</a></td>
+                <td><a href="{{ path('remove_user_from_group', {'id': user.id}) }}">Remove user from group</a></td>
             </tr>
         {% else %}
             <tr>
