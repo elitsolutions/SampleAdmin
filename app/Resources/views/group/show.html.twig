@@ -26,5 +26,5 @@
     </tbody>
 </table>
 <hr />
-<a href="{{ path('add_user_to_group', {'user_id'}) }}" class="btn btn-primary">Add a user to <strong>{{ groups.name }}</strong> group</a>
+<a href="{{ path('add_user_to_group', {'group_id': groups.id}) }}" class="btn btn-primary">Add a user to <strong>{{ groups.name }}</strong> group</a>
 {% endblock %}
