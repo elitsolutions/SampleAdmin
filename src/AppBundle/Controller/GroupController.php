@@ -117,7 +117,8 @@ class GroupController extends Controller
         }
 
         return $this->render('group/showUsers.html.twig', array(
-            'users' => $users
+            'users' => $users,
+            'group' => $group
         ));
 
     }
