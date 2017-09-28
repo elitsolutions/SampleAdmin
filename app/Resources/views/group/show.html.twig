@@ -5,7 +5,7 @@
 <div>Users in <strong>{{ groups.name }}</strong> group</div>
 <br />
 {% for message in app.flashes('notice') %}
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-danger" role="alert">
         {{ message }}
     </div>
 {% endfor %}
