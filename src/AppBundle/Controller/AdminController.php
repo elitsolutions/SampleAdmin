@@ -75,7 +75,7 @@ class AdminController extends Controller
     */
     public function editAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(Users::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
 
@@ -87,7 +87,7 @@ class AdminController extends Controller
 
         if ($request->isMethod('POST')) {
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 throw $this->createNotFoundException(
                     'valid'
                 );
