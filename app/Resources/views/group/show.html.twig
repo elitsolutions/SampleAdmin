@@ -5,7 +5,7 @@
     {% for user in groups %}
         <tr>
             <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
-            <td><a href="{{ user.group }}">{{ user.group }}</a></td>
+            <td><a href="{{ path('show_group', {'id': user.group.id}) }}">{{ user.group }}</a></td>
             <td><a href="{{ path('edit_user', {'id': user.id}) }}">Edit</a></td>
             <td><a href="{{ path('delete_user', {'id': user.id}) }}">Delete</a></td>
         </tr>
