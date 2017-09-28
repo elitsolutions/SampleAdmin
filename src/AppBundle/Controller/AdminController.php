@@ -113,4 +113,27 @@ class AdminController extends Controller
     
         return $this->redirectToRoute('user_list');
     }
+
+    /**
+    * @Route("/user/remove/{id}", name="remove_user_from_group", requirements={"id": "\d+"})
+    */
+    public function removeFromGroupAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(Users::class)->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
+
+        $user->setGroup('');
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('user_list');
+
+    }
 }
