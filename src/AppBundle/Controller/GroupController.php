@@ -110,7 +110,7 @@ class GroupController extends Controller
         $group = $em->getRepository(Groups::class)->find($id);
 
         throw $this->createNotFoundException(
-            'Group users: '.$group->users;
+            'Group users: '.$group->users
         );
 
         // $em->remove($user);
