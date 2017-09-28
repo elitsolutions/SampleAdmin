@@ -107,7 +107,7 @@ class GroupController extends Controller
     public function addUserToGroupShowAction($group_id, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(Users::class)->findAll();
+        $users = $em->getRepository(Users::class)->findBy(array(),array('group' => ''));
         $group = $em->getRepository(Groups::class)->find($group_id);
 
         if (!$group) {
