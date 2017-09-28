@@ -2,8 +2,21 @@
 {% extends 'admin/index.html.twig' %}
 
 {% block content %}
-Name: {{group.name}}<br />
-Group: {{group.group}}<br />
+    {% for user in groups %}
+        <tr>
+            <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
+            <td><a href="{{ user.group }}">{{ user.group }}</a></td>
+            <td><a href="{{ path('edit_user', {'id': user.id}) }}">Edit</a></td>
+            <td><a href="{{ path('delete_user', {'id': user.id}) }}">Delete</a></td>
+        </tr>
+    {% else %}
+        <tr>
+            <td></td>
+            <td class="d-flex justify-content-center text-danger">No user found. Add one</td>
+            <td></td>
+            <td></td>
+        </tr>
+    {% endfor %}
 <hr />
 <a href="{{ path('group_add') }}" class="btn btn-primary">Add a group</a>
 {% endblock %}
