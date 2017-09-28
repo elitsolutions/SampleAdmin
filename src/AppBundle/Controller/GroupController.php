@@ -117,7 +117,7 @@ class GroupController extends Controller
         }
 
         throw $this->createNotFoundException(
-            'Group users: '.$users
+            'Group users: '.$users->count()
         );
 
         // $em->remove($user);
