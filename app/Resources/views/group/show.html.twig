@@ -2,7 +2,7 @@
 {% extends 'admin/index.html.twig' %}
 
 {% block content %}
-    {% for user in groups %}
+    {% for user in groups.users %}
         <tr>
             <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
             <td><a href="{{ user.group }}">{{ user.group }}</a></td>
