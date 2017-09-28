@@ -117,7 +117,7 @@ class GroupController extends Controller
         }
 
         $usersInTheGroup = count($users);
-        if($usersInTheGroup == 0){
+        if($usersInTheGroup != 0){
             throw $this->createNotFoundException(
                 'You can not delete a group if it has users belonging to it'
             );
