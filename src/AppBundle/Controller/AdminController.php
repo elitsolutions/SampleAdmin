@@ -128,7 +128,7 @@ class AdminController extends Controller
             );
         }
 
-        $user->setGroup('');
+        $user->setGroup(null);
 
         $em->persist($user);
         $em->flush();
