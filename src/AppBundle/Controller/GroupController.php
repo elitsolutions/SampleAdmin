@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Groups;
 use AppBundle\Form\GroupType;
+use AppBundle\Entity\Users;
+use AppBundle\Form\UserType;
 
 class GroupController extends Controller
 {
