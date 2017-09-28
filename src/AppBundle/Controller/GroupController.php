@@ -102,6 +102,24 @@ class GroupController extends Controller
     }
 
     /**
+    * @Route("/group/delete/{id}", name="delete_group", requirements={"id": "\d+"})
+    */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $group = $em->getRepository(Groups::class)->find($id);
+
+        throw $this->createNotFoundException(
+            'Group users: '.$group->users;
+        );
+
+        // $em->remove($user);
+        // $em->flush();
+    
+        return $this->redirectToRoute('group_list');
+    }
+
+    /**
     * @Route("/group/addUser/{group_id}", name="add_user_to_group_show", requirements={"group_id": "\d+"})
     */
     public function addUserToGroupShowAction($group_id, Request $request)

@@ -14,8 +14,8 @@
         {% for group in groups %}
             <tr>
                 <td><a href="{{ path('show_group', {'id': group.id}) }}">{{ group.name }}</a></td>
-                <td><a href="{{ group.id }}">Edit</a></td>
-                <td><a href="{{ group.id }}">Delete</a></td>
+                <td><a href="{{ path('edit_group', {'id': group.id}) }}">Edit</a></td>
+                <td><a href="{{ path('delete_group', {'id': group.id}) }}">Delete</a></td>
             </tr>
         {% else %}
             <tr>
