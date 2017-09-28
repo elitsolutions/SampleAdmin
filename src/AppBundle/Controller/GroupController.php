@@ -123,7 +123,7 @@ class GroupController extends Controller
                 'You can not delete a group if it has users belonging to it!'
             );
 
-            return $this->redirectToRoute('show_group', array('id' => $group_id));
+            return $this->redirectToRoute('show_group', array('id' => $id));
         }
 
         $em->remove($group);
