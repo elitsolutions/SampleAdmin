@@ -59,7 +59,7 @@ class GroupController extends Controller
     */
     public function showAction($id)
     {
-        $user = $this->getDoctrine()
+        $group = $this->getDoctrine()
         ->getRepository(Groups::class)
         ->find($id);
 
