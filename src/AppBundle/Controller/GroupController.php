@@ -146,7 +146,7 @@ class GroupController extends Controller
 
         $user->setGroup($group_id);
 
-        $em->persist($user);
+        $em->persist($group);
         $em->flush();
 
         return $this->redirectToRoute('show_group', array('group_id' => $group_id));
