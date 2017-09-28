@@ -59,12 +59,12 @@ class GroupController extends Controller
     */
     public function showAction($id)
     {
-        $group = $this->getDoctrine()
+        $groups = $this->getDoctrine()
         ->getRepository(Groups::class)
         ->find($id);
 
         return $this->render('group/show.html.twig', array(
-            'group' => $group
+            'groups' => $groups
         ));
     }
 
