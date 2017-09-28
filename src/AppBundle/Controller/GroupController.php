@@ -102,7 +102,7 @@ class GroupController extends Controller
     }
 
     /**
-    * @Route("/group/addUser/{group_id}", name="add_user_to_group", requirements={"group_id": "\d+"})
+    * @Route("/group/addUser/{group_id}", name="add_user_to_group_show", requirements={"group_id": "\d+"})
     */
     public function addUserToGroupShowAction($group_id, Request $request)
     {
@@ -120,6 +120,36 @@ class GroupController extends Controller
             'users' => $users,
             'group' => $group
         ));
+
+    }
+
+    /**
+    * @Route("/group/{group_id}/user/{user_id}", name="add_user_to_group", requirements={"group_id": "\d+", "user_id": "\d+"})
+    */
+    public function AddUserToGroupAction($group_id, $user_id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $group = $em->getRepository(Groups::class)->find($group_id);
+        $user = $em->getRepository(Users::class)->find($user_id);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$user_id
+            );
+        }
+
+        if (!$group) {
+            throw $this->createNotFoundException(
+                'No group found for id '.$group_id
+            );
+        }
+
+        $user->setGroup($group_id);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('show_group', array('group_id' => $group_id));
 
     }
 }
