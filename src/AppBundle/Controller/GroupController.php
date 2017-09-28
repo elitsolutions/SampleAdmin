@@ -108,9 +108,16 @@ class GroupController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $group = $em->getRepository(Groups::class)->find($id);
+        $users = $em->getRepository(Users::class)->findBy(['group'=>$group]);
+
+        if (!$group) {
+            throw $this->createNotFoundException(
+                'No group found for id '.$group_id
+            );
+        }
 
         throw $this->createNotFoundException(
-            'Group users: '.$group->users->count()
+            'Group users: '.$users
         );
 
         // $em->remove($user);
