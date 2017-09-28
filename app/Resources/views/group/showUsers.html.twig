@@ -13,7 +13,7 @@
     <tbody>
         {% for user in users %}
             <tr>
-                <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
+                <td><a href="{{ path('add_user_to_group', {'group_id': group.id, 'user_id': user.id}) }}">Add {{ user.name }} to {{ group.name }} group</a></td>
             </tr>
         {% else %}
             <tr>
