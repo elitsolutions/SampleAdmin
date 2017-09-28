@@ -56,4 +56,9 @@ class Groups
     {
         $this->name = $name;
     }
+
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }
