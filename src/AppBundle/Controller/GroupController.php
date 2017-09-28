@@ -144,9 +144,9 @@ class GroupController extends Controller
             );
         }
 
-        $user->setGroup($group_id);
+        $user->setGroup($group);
 
-        $em->persist($group);
+        $em->persist($user);
         $em->flush();
 
         return $this->redirectToRoute('show_group', array('group_id' => $group_id));
