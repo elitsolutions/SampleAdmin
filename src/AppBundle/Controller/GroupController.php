@@ -53,4 +53,49 @@ class GroupController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+    * @Route("/group/{id}", name="show_group", requirements={"id": "\d+"})
+    */
+    public function showAction($id)
+    {
+        $user = $this->getDoctrine()
+        ->getRepository(Groups::class)
+        ->find($id);
+
+        return $this->render('group/show.html.twig', array(
+            'group' => $group
+        ));
+    }
+
+    /**
+    * @Route("/group/edit/{id}", name="edit_group", requirements={"id": "\d+"})
+    */
+    public function editAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(Groups::class)->find($id);
+        $form = $this->createForm(GroupType::class, $user);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No group found for id '.$id
+            );
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $formData = $form->getData();
+            $em->persist($formData);
+            $em->flush();
+
+            return $this->redirectToRoute('group_list');
+        }
+
+        return $this->render('group/form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
 }
