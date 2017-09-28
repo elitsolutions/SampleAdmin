@@ -149,7 +149,7 @@ class GroupController extends Controller
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute('show_group', array('group_id' => $group_id));
+        return $this->redirectToRoute('show_group', array('id' => $group_id));
 
     }
 }
