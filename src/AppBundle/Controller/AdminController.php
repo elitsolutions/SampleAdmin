@@ -85,18 +85,15 @@ class AdminController extends Controller
             );
         }
 
-        if ($request->isMethod('POST')) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            throw $this->createNotFoundException(
+                'valid'
+            );
+            $formData = $form->getData();
+            $em->persist($formData);
+            $em->flush();
 
-            if ($form->isSubmitted()) {
-                throw $this->createNotFoundException(
-                    'valid'
-                );
-                $formData = $form->getData();
-                $em->persist($formData);
-                $em->flush();
-
-                return $this->redirectToRoute('user_list');
-            }
+            return $this->redirectToRoute('user_list');
         }
 
         return $this->render('admin/form.html.twig', array(
