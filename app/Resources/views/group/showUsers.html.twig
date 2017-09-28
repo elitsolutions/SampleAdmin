@@ -2,25 +2,22 @@
 {% extends 'admin/index.html.twig' %}
 
 {% block content %}
-<div>Users in <strong>{{ group.name }}</strong> group</div>
+<div>Clicking on the user's name below, add the user to <strong>{{ group.name }}</strong> group</div>
 <br />
 <table class="table table-striped">
     <thead class="thead-default">
         <tr>
         <th>Name</th>
-        <th>Edit</th>
         </tr>
     </thead>
     <tbody>
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
-                <td><a href="{{ path('remove_user_from_group', {'id': user.id}) }}">Remove user from group</a></td>
             </tr>
         {% else %}
             <tr>
                 <td class="d-flex justify-content-center text-danger">No user found. Add one</td>
-                <td></td>
             </tr>
         {% endfor %}
     </tbody>
