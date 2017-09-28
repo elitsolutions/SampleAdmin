@@ -4,6 +4,12 @@
 {% block content %}
 <div>Users in <strong>{{ groups.name }}</strong> group</div>
 <br />
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+<br />
 <table class="table table-striped">
     <thead class="thead-default">
         <tr>
