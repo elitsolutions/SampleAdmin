@@ -116,12 +116,15 @@ class GroupController extends Controller
             );
         }
 
-        throw $this->createNotFoundException(
-            'Group users: '.count($users)
-        );
+        $usersInTheGroup = count($users);
+        if($usersInTheGroup == 0){
+            throw $this->createNotFoundException(
+                'You can not delete a group if it has users belonging to it'
+            );
+        }
 
-        // $em->remove($user);
-        // $em->flush();
+        $em->remove($group);
+        $em->flush();
     
         return $this->redirectToRoute('group_list');
     }
