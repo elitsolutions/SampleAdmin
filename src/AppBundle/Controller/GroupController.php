@@ -118,9 +118,12 @@ class GroupController extends Controller
 
         $usersInTheGroup = count($users);
         if($usersInTheGroup != 0){
-            throw $this->createNotFoundException(
-                'You can not delete a group if it has users belonging to it'
+            $this->addFlash(
+                'notice',
+                'You can not delete a group if it has users belonging to it!'
             );
+
+            return $this->redirectToRoute('show_group', array('id' => $group_id));
         }
 
         $em->remove($group);
