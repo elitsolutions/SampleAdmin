@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for user in groups.users %}
+        {% for user in users %}
             <tr>
                 <td><a href="{{ path('show_user', {'id': user.id}) }}">{{ user.name }}</a></td>
                 <td><a href="{{ path('remove_user_from_group', {'id': user.id}) }}">Remove user from group</a></td>
@@ -26,5 +26,4 @@
     </tbody>
 </table>
 <hr />
-<a href="{{ path('add_user_to_group', {'user_id'}) }}" class="btn btn-primary">Add a user to <strong>{{ groups.name }}</strong> group</a>
 {% endblock %}

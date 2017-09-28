@@ -138,34 +138,4 @@ class AdminController extends Controller
         return $this->redirectToRoute('user_list');
 
     }
-
-    /**
-    * @Route("/user/{user_id}/addToGroup/{group_id}", name="add_user_to_group", requirements={"user_id": "\d+", "group_id": "\d+"})
-    */
-    public function addUserToGroupAction($user_id, $group_id, Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(Users::class)->find($user_id);
-        $group = $em->getRepository(Groups::class)->find($group_id);
-
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$user_id
-            );
-        }
-
-        if (!$group) {
-            throw $this->createNotFoundException(
-                'No group found for id '.$group_id
-            );
-        }
-
-        $user->setGroup($group_id);
-
-        $em->persist($user);
-        $em->flush();
-
-        return $this->redirectToRoute('show_group', array('id' => $group_id));
-
-    }
 }

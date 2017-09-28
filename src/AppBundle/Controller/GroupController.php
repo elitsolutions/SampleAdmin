@@ -98,4 +98,25 @@ class GroupController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    /**
+    * @Route("/group/addUser/{group_id}", name="add_user_to_group", requirements={"group_id": "\d+"})
+    */
+    public function addUserToGroupShowAction($group_id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository(Users::class)->findAll();
+        $group = $em->getRepository(Groups::class)->find($group_id);
+
+        if (!$group) {
+            throw $this->createNotFoundException(
+                'No group found for id '.$group_id
+            );
+        }
+
+        return $this->render('group/showUsers.html.twig', array(
+            'users' => $users
+        ));
+
+    }
 }
