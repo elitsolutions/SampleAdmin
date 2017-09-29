@@ -30,8 +30,6 @@ class AdminControllerTest extends WebTestCase
         $client->submit($form);
 
         $this->assertEquals('AppBundle\Controller\AdminController::addAction', $client->getRequest()->attributes->get('_controller'));
-
-
     }
 
     public function testShowUser()
@@ -50,22 +48,20 @@ class AdminControllerTest extends WebTestCase
         );
     }
 
-    // public function testEditUser()
-    // {
-    //     $client = static::createClient();
+    public function testEditUser()
+    {
+        $client = static::createClient();
 
-    //     $crawler = $client->request('GET', '/user/edit/6');
+        $crawler = $client->request('GET', '/user/edit/6');
 
-    //     $form = $crawler->selectButton('Add User')->form();
+        $form = $crawler->selectButton('Add User')->form();
 
-    //     $values = $form->getPhpValues();
+        $form['user[name]'] = 'Elmar I';
+        $form['user[group]'] = '2';
 
-    //     $form['user[name]'] = 'Elmar I';
+        $client->submit($form);
 
-    //     $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
-    //     $form->getPhpFiles());
+        $this->assertEquals('AppBundle\Controller\AdminController::editAction', $client->getRequest()->attributes->get('_controller'));
 
-    //     $this->assertTrue($crawler->filter('html:contains("Elmar I")')->count() > 0);
-
-    // }
+    }
 }
