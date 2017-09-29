@@ -50,4 +50,23 @@ class AdminControllerTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
+    public function testEditUser()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/user/edit/6');
+
+        $form = $crawler->selectButton('Add User')->form();
+
+        $values = $form->getPhpValues();
+
+        $form['user[name]'] = 'Elmar I';
+
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
+        $form->getPhpFiles());
+
+        $this->assertTrue($crawler->filter('html:contains("Elmar I")')->count() > 0);
+
+    }
 }
