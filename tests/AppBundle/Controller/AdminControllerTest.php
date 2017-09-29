@@ -28,9 +28,9 @@ class AdminControllerTest extends WebTestCase
 
         $newCrawler = $client->submit($form);
 
-        var_dump($newCrawler);
+        // var_dump($newCrawler);
 
-        // $this->assertTrue($newCrawler->filter('html:contains("Lucas")')->count() > 0);
+        $this->assertTrue($newCrawler->filter('html:contains("Lucas")')->count() > 0);
 
     }
 
