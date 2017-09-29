@@ -22,7 +22,7 @@ class AdminControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/user/add');
 
-        $form = $crawler->selectButton('submit')->form();
+        $form = $crawler->selectButton('Add User')->form();
 
         $form['user[name]'] = 'Lucas';
 
