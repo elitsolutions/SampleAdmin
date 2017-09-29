@@ -26,11 +26,9 @@ class AdminControllerTest extends WebTestCase
 
         $form['user[name]'] = 'Lucas';
 
-        $client->submit($form);
+        $newCrawler = $client->submit($form);
 
-        $client->followRedirects();
-
-        $this->assertTrue($crawler->filter('html:contains("Lucas")')->count() > 0);
+        $this->assertTrue($newCrawler->filter('html:contains("Lucas")')->count() > 0);
 
     }
 
