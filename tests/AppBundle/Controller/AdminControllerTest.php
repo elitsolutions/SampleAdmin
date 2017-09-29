@@ -28,6 +28,9 @@ class AdminControllerTest extends WebTestCase
 
         $crawler = $client->submit($form);
 
-        $this->assertContains('Lucas', $crawler->filter('table > tr > td > a')->text());
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Lucas")')->count()
+        );
     }
 }
