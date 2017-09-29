@@ -27,13 +27,12 @@ class AdminControllerTest extends WebTestCase
         $form['user[name]'] = 'Anthony';
 
         $client->submit($form);
-        // $this->assertTrue($form->isSynchronized());
 
         $this->assertEquals('AppBundle\Controller\AdminController::addAction', $client->getRequest()->attributes->get('_controller'));
 
-        // var_dump($newCrawler);
+        $client->followRedirect();
 
-        // $this->assertTrue($newCrawler->filter('html:contains("Lucas")')->count() > 0);
+        $this->assertEquals('AppBundle\Controller\AdminController::showAction', $client->getRequest()->attributes->get('_controller'));
 
     }
 
