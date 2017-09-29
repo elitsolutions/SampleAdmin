@@ -12,7 +12,7 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('save', SubmitType::class, array('label' => 'Add Group'))
+            ->add('save', SubmitType::class, array('label' => 'Save Group'))
         ;
     }
 }
