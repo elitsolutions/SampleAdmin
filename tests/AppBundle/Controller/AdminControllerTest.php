@@ -24,7 +24,7 @@ class AdminControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Add User')->form();
 
-        $form['user[name]'] = 'Lucas';
+        $form['user[name]'] = 'Anthony';
 
         $client->submit($form);
         // $this->assertTrue($form->isSynchronized());
