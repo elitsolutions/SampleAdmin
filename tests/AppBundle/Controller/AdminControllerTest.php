@@ -24,13 +24,18 @@ class AdminControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Add User')->form();
 
+        $values = $form->getPhpValues();
+
         $form['user[name]'] = 'Lucas';
 
-        $crawler = $client->submit($form);
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
+        $form->getPhpFiles());
 
-        var_dump($crawler->filter('html:contains("Lucas")'));
+        // $crawler = $client->submit($form);
 
-        // $this->assertTrue($crawler->filter('html:contains("Lucas")')->count() > 0);
+        // var_dump($crawler->filter('html:contains("Lucas")'));
+
+        $this->assertTrue($crawler->filter('html:contains("Lucas")')->count() > 0);
 
         // $this->assertGreaterThan(
         //     0,
