@@ -13,6 +13,6 @@ class AdminControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/user');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Welcome to Sample Admin page!', $crawler->filter('#container h1')->text());
+        $this->assertContains('Welcome to Sample Admin page!', $crawler->filter('.container h1')->text());
     }
 }
