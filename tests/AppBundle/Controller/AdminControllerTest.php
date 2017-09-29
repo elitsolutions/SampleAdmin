@@ -31,7 +31,7 @@ class AdminControllerTest extends WebTestCase
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
         $form->getPhpFiles());
 
-        // $this->assertTrue($crawler->filter('html:contains("Lucas")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("Lucas 1")')->count() > 0);
 
     }
 }
