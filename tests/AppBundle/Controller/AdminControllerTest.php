@@ -37,7 +37,7 @@ class AdminControllerTest extends WebTestCase
 
     public function testShowUser()
     {
-        $client = static::createClass();
+        $client = static::createClient();
 
         $crawler = $client->request('GET', '/user');
 
