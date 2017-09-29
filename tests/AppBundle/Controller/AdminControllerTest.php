@@ -24,7 +24,7 @@ class AdminControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('submit')->form();
 
-        $form['name'] = 'Lucas';
+        $form['user[name]'] = 'Lucas';
 
         $crawler = $client->submit($form);
 
