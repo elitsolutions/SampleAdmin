@@ -33,5 +33,14 @@ class AdminControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filter('html:contains("Lucas")')->count() > 0);
 
+        $link = $crawler->filter('a:contains("Lucas")')->link();
+
+        $crawler = $client->click($link);
+
+        $this->assertContains(
+            'Lucas',
+            $client->getResponse()->getContent()
+        );
+
     }
 }
