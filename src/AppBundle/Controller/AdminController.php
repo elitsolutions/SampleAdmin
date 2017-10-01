@@ -199,30 +199,52 @@ class AdminController extends Controller
     */
     public function editAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(Users::class)->find($id);
-        $form = $this->createForm(UserType::class, $user);
+        $normalizers = new ObjectNormalizer();
+        
+        $normalizers->setCircularReferenceHandler(function ($object) {
+            return $object->getName();
+        });
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$id
-            );
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
+        // get api argument value
+        $api = $request->query->get('api');
+        
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+
+        }
+        else
+        {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository(Users::class)->find($id);
+            $form = $this->createForm(UserType::class, $user);
+    
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'No user found for id '.$id
+                );
+            }
+    
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+    
+                $formData = $form->getData();
+                $em->persist($formData);
+                $em->flush();
+    
+                return $this->redirectToRoute('user_list');
+            }
+    
+            return $this->render('admin/form.html.twig', array(
+                'form' => $form->createView()
+            ));
         }
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $formData = $form->getData();
-            $em->persist($formData);
-            $em->flush();
-
-            return $this->redirectToRoute('user_list');
-        }
-
-        return $this->render('admin/form.html.twig', array(
-            'form' => $form->createView()
-        ));
     }
 
     /**
