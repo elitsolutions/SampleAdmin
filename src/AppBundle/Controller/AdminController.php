@@ -25,8 +25,13 @@ class AdminController extends Controller
     */
     public function listAction(Request $request)
     {
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
+        $normalizers = new ObjectNormalizer();
+        
+        $normalizers->setCircularReferenceHandler(function ($object) {
+            return $object->getName();
+        });
+
+        $encoders = array(new JsonEncoder());
         
         $serializer = new Serializer($normalizers, $encoders);
 
