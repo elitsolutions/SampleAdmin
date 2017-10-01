@@ -156,15 +156,42 @@ class AdminController extends Controller
     /**
     * @Route("/user/{id}", name="show_user", requirements={"id": "\d+"})
     */
-    public function showAction($id)
+    public function showAction($id, Request $request)
     {
+        $normalizers = new ObjectNormalizer();
+        
+        $normalizers->setCircularReferenceHandler(function ($object) {
+            return $object->getName();
+        });
+
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
         $user = $this->getDoctrine()
         ->getRepository(Users::class)
         ->find($id);
 
-        return $this->render('admin/show.html.twig', array(
-            'user' => $user
-        ));
+        // get api argument value
+        $api = $request->query->get('api');
+
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+            $response = new Response();
+            $jsonContent = $serializer->serialize($users, 'json');
+            $response->setContent($jsonContent);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_OK);
+
+            return $response;
+        }
+        else
+        {
+            return $this->render('admin/show.html.twig', array(
+                'user' => $user
+            ));
+        }
     }
 
     /**
