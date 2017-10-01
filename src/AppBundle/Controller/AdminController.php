@@ -92,6 +92,8 @@ class AdminController extends Controller
             // if ($form->isValid()) {
                 $formData = $request->request->all();
 
+                var_dump($formData);
+
                 // $user->setName();
                 
                 // $em = $this->getDoctrine()->getManager();
@@ -99,7 +101,7 @@ class AdminController extends Controller
                 // $em->flush();
         
                 $response = new Response();
-                $jsonContent = $serializer->serialize($formData, 'json');
+                $jsonContent = $serializer->serialize(array('status'=>'added'), 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
                 $response->setStatusCode(Response::HTTP_OK);
