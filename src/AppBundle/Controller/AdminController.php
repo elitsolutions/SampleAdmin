@@ -28,7 +28,7 @@ class AdminController extends Controller
         $normalizers = new ObjectNormalizer();
         
         $normalizers->setCircularReferenceHandler(function ($object) {
-            return $object->getId();
+            return $object->getSurname();
         });
 
         $encoders = new JsonEncoder();
