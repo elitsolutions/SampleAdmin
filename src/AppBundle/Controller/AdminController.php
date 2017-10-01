@@ -31,9 +31,9 @@ class AdminController extends Controller
             return $object->getName();
         });
 
-        $encoders = array(new JsonEncoder());
+        $encoders = new JsonEncoder();
         
-        $serializer = new Serializer($normalizers, $encoders);
+        $serializer = new Serializer(array($normalizers), array($encoders));
 
         // get api argument value
         $api = $request->query->get('api');
