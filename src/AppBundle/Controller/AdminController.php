@@ -107,7 +107,7 @@ class AdminController extends Controller
                 }
                 
                 $user->setName($formData['name']);
-                $user->setGroup(groups);
+                $user->setGroup($groups);
 
                 $em->persist($user);
                 $em->flush();
