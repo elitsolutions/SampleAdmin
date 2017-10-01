@@ -89,8 +89,6 @@ class AdminController extends Controller
         {
             $form->submit($request->request->all());
 
-            var_dump($form->isValid());
-
             if ($form->isValid()) {
                 $formData = $form->getData();
                 
@@ -110,7 +108,7 @@ class AdminController extends Controller
             {
                 // form is not valid
                 $response = new Response();
-                $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
+                $jsonContent = $serializer->serialize(array('status'=>$form->isValid()), 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
                 $response->setStatusCode(Response::HTTP_NOT_FOUND);
