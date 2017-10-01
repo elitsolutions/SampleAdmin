@@ -73,7 +73,7 @@ class AdminControllerTest extends WebTestCase
         
         $link = $crawler->filter('a:contains("Tim")')->link();
 
-        var_dump($link);
+        $crawler = $client->click($link);
 
         // $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
 
