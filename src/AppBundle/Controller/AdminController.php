@@ -301,6 +301,10 @@ class AdminController extends Controller
         
             return $this->redirectToRoute('user_list');
         }
+        else
+        {
+            return $this->redirectToRoute('user_list');
+        }
     }
 
     /**
