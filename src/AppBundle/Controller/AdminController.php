@@ -89,14 +89,13 @@ class AdminController extends Controller
         {
             $formData = json_decode($request->getContent(), true);
             
-            $form->submit($formData);
+            // $form->submit($formData);
 
-            var_dump($form->isValid());
 
             // if ($form->isValid()) {
                 
 
-                // var_dump($formData);
+                var_dump($formData['name']);
 
                 // $user->setName();
                 
