@@ -75,7 +75,7 @@ class AdminControllerTest extends WebTestCase
 
         $crawler = $client->click($link);
 
-        $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('AppBundle\Controller\AdminController::showAction', $client->getRequest()->attributes->get('_controller'));
 
     }
 }
