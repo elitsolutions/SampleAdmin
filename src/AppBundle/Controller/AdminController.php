@@ -87,17 +87,19 @@ class AdminController extends Controller
         // if $api is set and is true, post and return id
         if(!is_null($api) && $api == 'true')
         {
-            $form->submit($request->request->all());
+            // $form->submit($request->request->all());
 
             // if ($form->isValid()) {
                 $formData = $request->request->all();
+
+                // $user->setName();
                 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($formData);
-                $em->flush();
+                // $em = $this->getDoctrine()->getManager();
+                // $em->persist($formData);
+                // $em->flush();
         
                 $response = new Response();
-                $jsonContent = $serializer->serialize(array('status'=>'added'), 'json');
+                $jsonContent = $serializer->serialize($formData['name'], 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
                 $response->setStatusCode(Response::HTTP_OK);
