@@ -30,7 +30,7 @@ class AdminController extends Controller
         ->findAll();
 
         // if $api is set and is true, show as json
-        if(!is_null($api) && $api === true)
+        if(!is_null($api) && $api == 'true')
         {
             $response = new Response();
             $response->setContent(json_encode($users));
