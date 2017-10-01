@@ -215,7 +215,46 @@ class AdminController extends Controller
         // if $api is set and is true, show as json
         if(!is_null($api) && $api == 'true')
         {
+            $formData = json_decode($request->getContent(), true);
+            
+            // check if we have required name key value
 
+            if(isset($formData['name']) && !empty($formData['name']))
+            {                
+                $em = $this->getDoctrine()->getManager();
+
+                $user->setName($formData['name']);
+
+                // check if group is set and if it is integer
+                if(isset($formData['group']) && intval($formData['group']))
+                {
+                    $groupId = intval($formData['group']);
+                    $groups = $em->getRepository(Groups::Class)->find($groupId);
+                    $user->setGroup($groups);
+                }
+
+                $em->persist($user);
+                $em->flush();
+        
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'edited'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_OK);
+    
+                return $response;
+            }
+            else
+            {
+                // form is not valid
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+    
+                return $response;
+            }
         }
         else
         {
