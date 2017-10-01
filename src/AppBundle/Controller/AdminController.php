@@ -67,6 +67,16 @@ class AdminController extends Controller
     */
     public function addAction(Request $request)
     {
+        $normalizers = new ObjectNormalizer();
+        
+        // $normalizers->setCircularReferenceHandler(function ($object) {
+        //     return $object->getName();
+        // });
+
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
         // get api argument value
         $api = $request->query->get('api');
 
