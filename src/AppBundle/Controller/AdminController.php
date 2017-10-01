@@ -90,14 +90,14 @@ class AdminController extends Controller
             $form->submit($request->request->all());
 
             // if ($form->isValid()) {
-                $formData = $form->getData();
+                $formData = $request->request->all();
                 
-                // $em = $this->getDoctrine()->getManager();
-                // $em->persist($formData);
-                // $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($formData);
+                $em->flush();
         
                 $response = new Response();
-                $jsonContent = $serializer->serialize($request->request->all(), 'json');
+                $jsonContent = $serializer->serialize(array('status'=>'added'), 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
                 $response->setStatusCode(Response::HTTP_OK);
