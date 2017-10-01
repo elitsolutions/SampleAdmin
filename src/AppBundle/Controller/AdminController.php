@@ -290,14 +290,17 @@ class AdminController extends Controller
     /**
     * @Route("/user/delete/{id}", name="delete_user", requirements={"id": "\d+"})
     */
-    public function deleteAction($id)
+    public function deleteAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(Users::class)->find($id);
-        $em->remove($user);
-        $em->flush();
-    
-        return $this->redirectToRoute('user_list');
+        // only allow deleting via post request
+        if ($request->isMethod('POST')) {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository(Users::class)->find($id);
+            $em->remove($user);
+            $em->flush();
+        
+            return $this->redirectToRoute('user_list');
+        }
     }
 
     /**
