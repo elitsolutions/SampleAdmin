@@ -94,6 +94,17 @@ class AdminController extends Controller
     
                 return $response;
             }
+            else
+            {
+                // form is not valid
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_NOT_FOUND);
+    
+                return $response;
+            }
         }
         else
         {   
