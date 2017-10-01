@@ -32,7 +32,7 @@ class AdminController extends Controller
         // if $api is set and is true, show as json
         if(!is_null($api) && $api)
         {
-            $response->setContent($users);
+            $response->setContent(json_encode($users));
             $response->headers->set('Content-Type', 'application/json');
             $response->setStatusCode(Response::HTTP_OK);
         }
