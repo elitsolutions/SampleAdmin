@@ -19,7 +19,7 @@ class AdminController extends Controller
     /**
     * @Route("/user", name="user_list")
     */
-    public function listAction()
+    public function listAction($api = false)
     {
         // find all users
         $users = $this->getDoctrine()
