@@ -90,9 +90,9 @@ class AdminController extends Controller
             // $form->submit($request->request->all());
 
             // if ($form->isValid()) {
-                $formData = $request->request->all();
+                $formData = $form->getData();
 
-                var_dump($formData['name']);
+                var_dump($formData);
 
                 // $user->setName();
                 
