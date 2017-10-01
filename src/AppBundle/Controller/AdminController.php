@@ -92,7 +92,7 @@ class AdminController extends Controller
             // if ($form->isValid()) {
                 $formData = $request->request->all();
 
-                var_dump($formData);
+                var_dump($formData[0]);
 
                 // $user->setName();
                 
