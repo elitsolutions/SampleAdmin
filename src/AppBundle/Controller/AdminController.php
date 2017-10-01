@@ -42,7 +42,8 @@ class AdminController extends Controller
         if(!is_null($api) && $api == 'true')
         {
             $response = new Response();
-            $response->setContent($serializer->serialize($users, 'json'));
+            $jsonContent = $serializer->serialize($users, 'json');
+            $response->setContent($jsonContent);
             $response->headers->set('Content-Type', 'application/json');
             $response->setStatusCode(Response::HTTP_OK);
 
