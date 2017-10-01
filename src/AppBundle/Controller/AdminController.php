@@ -89,14 +89,10 @@ class AdminController extends Controller
         {
             $formData = json_decode($request->getContent(), true);
             
-            // $form->submit($formData);
+            // check if we have required name key value
 
-
-            // if ($form->isValid()) {
-                
-
-                // var_dump($formData['name']);
-
+            if(isset($formData['name']) && !empty($formData['name']))
+            {
                 $user->setName($formData['name']);
                 
                 $em = $this->getDoctrine()->getManager();
@@ -110,18 +106,18 @@ class AdminController extends Controller
                 $response->setStatusCode(Response::HTTP_OK);
     
                 return $response;
-            // }
-            // else
-            // {
-            //     // form is not valid
-            //     $response = new Response();
-            //     $jsonContent = $serializer->serialize(array('status'=>$form->isValid()), 'json');
-            //     $response->setContent($jsonContent);
-            //     $response->headers->set('Content-Type', 'application/json');
-            //     $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            }
+            else
+            {
+                // form is not valid
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_NOT_FOUND);
     
-            //     return $response;
-            // }
+                return $response;
+            }
         }
         else
         {   
