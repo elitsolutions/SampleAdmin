@@ -19,7 +19,7 @@ class AdminController extends Controller
     /**
     * @Route("/user", name="user_list")
     */
-    public function listAction()
+    public function listAction(Request $request)
     {
         // get api argument value
         $api = $request->query->get('api');
