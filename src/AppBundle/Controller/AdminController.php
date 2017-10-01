@@ -92,11 +92,23 @@ class AdminController extends Controller
             // check if we have required name key value
 
             if(isset($formData['name']) && !empty($formData['name']))
-            {
-                $user->setName($formData['name']);
-                $user->setGroup($formData['group']);
-                
+            {                
                 $em = $this->getDoctrine()->getManager();
+
+                // check if group is set and if it is integer
+                if(isset($formData['group']) && intval($formData['group']))
+                {
+                    $groupId = intval($formData['group']);
+                    $groups = $em->getRepository(Groups::Class)->find($groupId);
+                }
+                else
+                {
+                    $groups = null;
+                }
+                
+                $user->setName($formData['name']);
+                $user->setGroup(groups);
+
                 $em->persist($user);
                 $em->flush();
         
@@ -115,7 +127,7 @@ class AdminController extends Controller
                 $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
-                $response->setStatusCode(Response::HTTP_NOT_FOUND);
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
     
                 return $response;
             }
