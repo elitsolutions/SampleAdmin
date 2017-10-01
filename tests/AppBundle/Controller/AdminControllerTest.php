@@ -65,13 +65,13 @@ class AdminControllerTest extends WebTestCase
 
     }
 
-    public function testDeleteUser()
-    {
-        $client = static::createClient();
+    // public function testDeleteUser()
+    // {
+    //     $client = static::createClient();
 
-        $crawler = $client->request('GET', '/user/delete/24');
+    //     $crawler = $client->request('GET', '/user/delete/24');
 
-        $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
+    //     $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
 
-    }
+    // }
 }
