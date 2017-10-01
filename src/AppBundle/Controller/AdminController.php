@@ -19,10 +19,10 @@ class AdminController extends Controller
     /**
     * @Route("/user", name="user_list")
     */
-    public function listAction($api = false)
+    public function listAction($api)
     {
         var_dump($api);
-        
+
         // find all users
         $users = $this->getDoctrine()
         ->getRepository(Users::class)
