@@ -19,17 +19,18 @@ class AdminController extends Controller
     /**
     * @Route("/user", name="user_list")
     */
-    public function listAction($api)
+    public function listAction()
     {
-        var_dump($api);
+        // get api argument value
+        $api = $request->query->get('api');
 
         // find all users
         $users = $this->getDoctrine()
         ->getRepository(Users::class)
         ->findAll();
 
-        // if $api is set to true, show as json
-        if($api)
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api)
         {
             $response->setContent($users);
             $response->headers->set('Content-Type', 'application/json');
