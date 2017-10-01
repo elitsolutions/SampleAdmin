@@ -95,13 +95,13 @@ class AdminController extends Controller
             // if ($form->isValid()) {
                 
 
-                var_dump($formData['name']);
+                // var_dump($formData['name']);
 
-                // $user->setName();
+                $user->setName($formData['name']);
                 
-                // $em = $this->getDoctrine()->getManager();
-                // $em->persist($formData);
-                // $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
         
                 $response = new Response();
                 $jsonContent = $serializer->serialize(array('status'=>'added'), 'json');
