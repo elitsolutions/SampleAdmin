@@ -70,8 +70,10 @@ class AdminControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/user');
+
+        $deleteBtnCount = $crawler->filter('a:contains("Delete")')->count();
         
-        $link = $crawler->filter('a:contains("Tim")')->link();
+        $link = $crawler->filter('a:contains("Delete")')->eq($deleteBtnCount-1)->link();
 
         $crawler = $client->click($link);
 
