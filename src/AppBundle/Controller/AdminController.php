@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Users;
 use AppBundle\Form\UserType;
@@ -21,6 +25,11 @@ class AdminController extends Controller
     */
     public function listAction(Request $request)
     {
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        
+        $serializer = new Serializer($normalizers, $encoders);
+
         // get api argument value
         $api = $request->query->get('api');
 
@@ -33,7 +42,7 @@ class AdminController extends Controller
         if(!is_null($api) && $api == 'true')
         {
             $response = new Response();
-            $response->setContent(json_encode($users));
+            $response->setContent($serializer->serialize($users, 'json'));
             $response->headers->set('Content-Type', 'application/json');
             $response->setStatusCode(Response::HTTP_OK);
 
