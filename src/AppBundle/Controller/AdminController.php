@@ -21,6 +21,8 @@ class AdminController extends Controller
     */
     public function listAction($api = false)
     {
+        var_dump($api);
+        
         // find all users
         $users = $this->getDoctrine()
         ->getRepository(Users::class)
@@ -29,7 +31,6 @@ class AdminController extends Controller
         // if $api is set to true, show as json
         if($api)
         {
-            var_dump($api);
             $response->setContent($users);
             $response->headers->set('Content-Type', 'application/json');
             $response->setStatusCode(Response::HTTP_OK);
