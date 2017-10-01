@@ -209,6 +209,9 @@ class AdminController extends Controller
         
         $serializer = new Serializer(array($normalizers), array($encoders));
 
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(Users::class)->find($id);
+
         // get api argument value
         $api = $request->query->get('api');
         
@@ -258,10 +261,8 @@ class AdminController extends Controller
         }
         else
         {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository(Users::class)->find($id);
             $form = $this->createForm(UserType::class, $user);
-    
+
             if (!$user) {
                 throw $this->createNotFoundException(
                     'No user found for id '.$id
