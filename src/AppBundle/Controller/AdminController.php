@@ -77,7 +77,7 @@ class AdminController extends Controller
         // if $api is set and is true, post and return id
         if(!is_null($api) && $api == 'true')
         {
-            $form->submit($request);
+            $form->submit($request->request->all());
 
             if ($form->isValid()) {
                 $formData = $form->getData();
