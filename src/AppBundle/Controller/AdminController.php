@@ -89,6 +89,8 @@ class AdminController extends Controller
         {
             $form->submit($request->request->all());
 
+            var_dump($form);
+
             if ($form->isValid()) {
                 $formData = $form->getData();
                 
