@@ -67,26 +67,53 @@ class AdminController extends Controller
     */
     public function addAction(Request $request)
     {
+        // get api argument value
+        $api = $request->query->get('api');
+
         $user = new Users();
 
         $form = $this->createForm(UserType::class, $user);
 
-        $form->handleRequest($request);
+        // if $api is set and is true, post and return id
+        if(!is_null($api) && $api == 'true')
+        {
+            $form->submit($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $formData = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($formData);
-            $em->flush();
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($formData);
+                $em->flush();
+        
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'OK'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_OK);
     
-            return $this->redirectToRoute('user_list');
+                return $response;
+            }
         }
-
-        return $this->render('admin/form.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        else
+        {   
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+    
+                $formData = $form->getData();
+    
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($formData);
+                $em->flush();
+        
+                return $this->redirectToRoute('user_list');
+            }
+    
+            return $this->render('admin/form.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 
     /**
