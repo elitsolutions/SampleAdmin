@@ -94,6 +94,7 @@ class AdminController extends Controller
             if(isset($formData['name']) && !empty($formData['name']))
             {
                 $user->setName($formData['name']);
+                $user->setGroup($formData['group']);
                 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
