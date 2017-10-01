@@ -87,7 +87,7 @@ class AdminController extends Controller
                 $em->flush();
         
                 $response = new Response();
-                $jsonContent = $serializer->serialize(array('status'=>'OK'), 'json');
+                $jsonContent = $serializer->serialize(array('status'=>'added'), 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
                 $response->setStatusCode(Response::HTTP_OK);
