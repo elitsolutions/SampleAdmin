@@ -26,9 +26,19 @@ class AdminController extends Controller
         ->getRepository(Users::class)
         ->findAll();
 
-        return $this->render('admin/index.html.twig', array(
-            'users' => $users
-        ));
+        // if $api is set to true, show as json
+        if($api)
+        {
+            $response->setContent($users);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_OK);
+        }
+        else
+        {
+            return $this->render('admin/index.html.twig', array(
+                'users' => $users
+            ));
+        }
     }
 
     /**
