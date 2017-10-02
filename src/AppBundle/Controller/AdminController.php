@@ -295,6 +295,16 @@ class AdminController extends Controller
         // only allow deleting via post request
         if ($request->isMethod('POST')) {
 
+            $normalizers = new ObjectNormalizer();
+            
+            // $normalizers->setCircularReferenceHandler(function ($object) {
+            //     return $object->getName();
+            // });
+    
+            $encoders = new JsonEncoder();
+            
+            $serializer = new Serializer(array($normalizers), array($encoders));
+
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(Users::class)->find($id);
             $em->remove($user);
