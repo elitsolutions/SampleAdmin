@@ -199,6 +199,17 @@ class GroupController extends Controller
         // if $api is set and is true, show as json
         if(!is_null($api) && $api == 'true')
         {
+            if (!$group) {
+                // id is wrong
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'No group found for id '.$id), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+    
+                return $response;
+            }
+
             $formData = json_decode($request->getContent(), true);
 
             // check if we have required name key value
