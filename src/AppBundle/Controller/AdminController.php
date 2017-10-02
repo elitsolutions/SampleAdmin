@@ -294,12 +294,45 @@ class AdminController extends Controller
     {
         // only allow deleting via post request
         if ($request->isMethod('POST')) {
+
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(Users::class)->find($id);
             $em->remove($user);
             $em->flush();
-        
-            return $this->redirectToRoute('user_list');
+
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'No user found for id '.$id
+                );
+            }
+
+            // get api argument value
+            $api = $request->query->get('api');
+
+            // if $api is set and is true, show as json
+            if(!is_null($api) && $api == 'true')
+            {
+                if (!$user) {
+                    $message = 'No user found for id '.$id;
+                    $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+                }
+                else
+                {
+                    $message = 'Deleted';
+                    $response->setStatusCode(Response::HTTP_OK);
+                }
+
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>$message), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                
+                return $response;
+            }
+            else
+            {
+                return $this->redirectToRoute('user_list');
+            }
         }
         else
         {
