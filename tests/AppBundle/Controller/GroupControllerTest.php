@@ -84,6 +84,6 @@ class GroupControllerTest extends WebTestCase
             array()
         );
 
-        $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('AppBundle\Controller\GroupController::deleteAction', $client->getRequest()->attributes->get('_controller'));
     }
 }
