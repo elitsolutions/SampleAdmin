@@ -304,12 +304,6 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(Users::class)->find($id);
 
-            if (!$user) {
-                throw $this->createNotFoundException(
-                    'No user found for id '.$id
-                );
-            }
-
             // get api argument value
             $api = $request->query->get('api');
 
@@ -326,7 +320,7 @@ class AdminController extends Controller
                 {
                     $em->remove($user);
                     $em->flush();
-                    
+
                     $message = 'Deleted';
                     $response->setStatusCode(Response::HTTP_OK);
                 }
@@ -339,6 +333,12 @@ class AdminController extends Controller
             }
             else
             {
+                if (!$user) {
+                    throw $this->createNotFoundException(
+                        'No user found for id '.$id
+                    );
+                }
+                
                 return $this->redirectToRoute('user_list');
             }
         }
