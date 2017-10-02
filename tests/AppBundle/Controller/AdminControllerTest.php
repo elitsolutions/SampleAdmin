@@ -80,7 +80,7 @@ class AdminControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/user');
 
         
-        $form = $crawler->selectButton('Delete')->last()->form();
+        $form = $crawler->selectButton('Delete')->last()->form()->attr('action');
         
         // $link = $crawler->filter('form')->eq($deleteBtnCount-1);
 
