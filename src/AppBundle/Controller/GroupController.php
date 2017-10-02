@@ -233,7 +233,7 @@ class GroupController extends Controller
         }
         else
         {
-            $form = $this->createForm(GroupType::class, $user);
+            $form = $this->createForm(GroupType::class, $group);
             
             if (!$group) {
                 throw $this->createNotFoundException(
