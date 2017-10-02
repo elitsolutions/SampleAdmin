@@ -68,22 +68,22 @@ class GroupControllerTest extends WebTestCase
 
     }
 
-    // public function testDeleteGroup()
-    // {
-    //     $client = static::createClient();
+    public function testDeleteGroup()
+    {
+        $client = static::createClient();
 
-    //     $crawler = $client->request('GET', '/group');
+        $crawler = $client->request('GET', '/group');
 
-    //     $lastDeleteFormAction = $crawler->filter('form')->last()->attr('action');
+        $lastDeleteFormAction = $crawler->filter('form')->last()->attr('action');
         
-    //     $client->request(
-    //         'POST',
-    //         $lastDeleteFormAction,
-    //         array(),
-    //         array(),
-    //         array()
-    //     );
+        $client->request(
+            'POST',
+            $lastDeleteFormAction,
+            array(),
+            array(),
+            array()
+        );
 
-    //     $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
-    // }
+        $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
+    }
 }
