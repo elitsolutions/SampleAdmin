@@ -56,17 +56,15 @@ class GroupControllerTest extends WebTestCase
         $link = $crawler->filter('a.edit_group')->last()->attr('href');
         $text = $crawler->filter('a.edit_group')->last()->text();
 
-        var_dump($link);
+        $crawler = $client->request('GET', $link);
 
-        // $crawler = $client->request('GET', $link);
+        $form = $crawler->selectButton('Save Group')->form();
 
-        // $form = $crawler->selectButton('Save Group')->form();
+        $form['user[name]'] = $text.' edited';
 
-        // $form['user[name]'] = $text.' edited';
+        $client->submit($form);
 
-        // $client->submit($form);
-
-        // $this->assertEquals('AppBundle\Controller\AdminController::editAction', $client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('AppBundle\Controller\AdminController::editAction', $client->getRequest()->attributes->get('_controller'));
 
     }
 
