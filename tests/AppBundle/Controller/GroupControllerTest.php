@@ -64,7 +64,7 @@ class GroupControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertEquals('AppBundle\Controller\AdminController::editAction', $client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('AppBundle\Controller\GroupController::editAction', $client->getRequest()->attributes->get('_controller'));
 
     }
 
