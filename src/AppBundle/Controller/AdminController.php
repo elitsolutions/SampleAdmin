@@ -68,10 +68,6 @@ class AdminController extends Controller
     public function addAction(Request $request)
     {
         $normalizers = new ObjectNormalizer();
-        
-        // $normalizers->setCircularReferenceHandler(function ($object) {
-        //     return $object->getName();
-        // });
 
         $encoders = new JsonEncoder();
         

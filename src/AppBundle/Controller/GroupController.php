@@ -65,26 +65,74 @@ class GroupController extends Controller
     */
     public function addAction(Request $request)
     {
+        $normalizers = new ObjectNormalizer();
+        
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
+        // get api argument value
+        $api = $request->query->get('api');
+
         $group = new Groups();
 
         $form = $this->createForm(GroupType::class, $group);
 
-        $form->handleRequest($request);
+        // if $api is set and is true, post and return id
+        if(!is_null($api) && $api == 'true')
+        {
+            $formData = json_decode($request->getContent(), true);
+            
+            // check if we have required name key value
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if(isset($formData['name']) && !empty($formData['name']))
+            {                
+                $em = $this->getDoctrine()->getManager();
+                
+                $group->setName($formData['name']);
 
-            $task = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($task);
-            $em->flush();
+                $em->persist($group);
+                $em->flush();
+        
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'added'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_OK);
     
-            return $this->redirectToRoute('group_list');
+                return $response;
+            }
+            else
+            {
+                // form is not valid
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+    
+                return $response;
+            }
         }
-
-        return $this->render('group/form.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        else
+        {
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+    
+                $task = $form->getData();
+    
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($task);
+                $em->flush();
+        
+                return $this->redirectToRoute('group_list');
+            }
+    
+            return $this->render('group/form.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 
     /**
