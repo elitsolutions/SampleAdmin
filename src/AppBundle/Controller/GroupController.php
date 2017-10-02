@@ -84,7 +84,6 @@ class GroupController extends Controller
             $formData = json_decode($request->getContent(), true);
             
             // check if we have required name key value
-
             if(isset($formData['name']) && !empty($formData['name']))
             {                
                 $em = $this->getDoctrine()->getManager();
@@ -138,15 +137,42 @@ class GroupController extends Controller
     /**
     * @Route("/group/{id}", name="show_group", requirements={"id": "\d+"})
     */
-    public function showAction($id)
+    public function showAction($id, Request $request)
     {
-        $groups = $this->getDoctrine()
+        $normalizers = new ObjectNormalizer();
+        
+        $normalizers->setCircularReferenceHandler(function ($object) {
+            return $object->getName();
+        });
+
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
+        $group = $this->getDoctrine()
         ->getRepository(Groups::class)
         ->find($id);
 
-        return $this->render('group/show.html.twig', array(
-            'groups' => $groups
-        ));
+        // get api argument value
+        $api = $request->query->get('api');
+        
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+            $response = new Response();
+            $jsonContent = $serializer->serialize($group, 'json');
+            $response->setContent($jsonContent);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_OK);
+
+            return $response;
+        }
+        else
+        {
+            return $this->render('group/show.html.twig', array(
+                'groups' => $group
+            ));
+        }
     }
 
     /**
