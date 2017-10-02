@@ -297,7 +297,7 @@ class AdminController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(Users::class)->find($id);
-            var_dump($user);
+            var_dump($user); die();
             $em->remove($user);
             $em->flush();
 
