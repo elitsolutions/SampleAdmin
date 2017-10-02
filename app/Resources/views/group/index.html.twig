@@ -15,7 +15,12 @@
             <tr>
                 <td><a href="{{ path('show_group', {'id': group.id}) }}">{{ group.name }}</a></td>
                 <td><a href="{{ path('edit_group', {'id': group.id}) }}">Edit</a></td>
-                <td><a href="{{ path('delete_group', {'id': group.id}) }}">Delete</a></td>
+                <td>
+                    <form  action="{{ path('delete_user', {'id': group.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete the group?')">
+                        <input type="hidden" value={{group.id}}>
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </td>
             </tr>
         {% else %}
             <tr>

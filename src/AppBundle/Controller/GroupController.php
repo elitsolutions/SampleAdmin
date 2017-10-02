@@ -169,7 +169,7 @@ class GroupController extends Controller
     
                 return $response;
             }
-            
+
             $response = new Response();
             $jsonContent = $serializer->serialize($group, 'json');
             $response->setContent($jsonContent);
@@ -283,32 +283,35 @@ class GroupController extends Controller
     /**
     * @Route("/group/delete/{id}", name="delete_group", requirements={"id": "\d+"})
     */
-    public function deleteAction($id)
+    public function deleteAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $group = $em->getRepository(Groups::class)->find($id);
-        $users = $em->getRepository(Users::class)->findBy(['group'=>$group]);
-
-        if (!$group) {
-            throw $this->createNotFoundException(
-                'No group found for id '.$group_id
-            );
-        }
-
-        $usersInTheGroup = count($users);
-        if($usersInTheGroup != 0){
-            $this->addFlash(
-                'notice',
-                'You can not delete a group if it has users belonging to it!'
-            );
-
-            return $this->redirectToRoute('show_group', array('id' => $id));
-        }
-
-        $em->remove($group);
-        $em->flush();
+        // only allow deleting via post request
+        if ($request->isMethod('POST')) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $group = $em->getRepository(Groups::class)->find($id);
+            $users = $em->getRepository(Users::class)->findBy(['group'=>$group]);
     
-        return $this->redirectToRoute('group_list');
+            if (!$group) {
+                throw $this->createNotFoundException(
+                    'No group found for id '.$group_id
+                );
+            }
+    
+            $usersInTheGroup = count($users);
+            if($usersInTheGroup != 0){
+                $this->addFlash(
+                    'notice',
+                    'You can not delete a group if it has users belonging to it!'
+                );
+    
+                return $this->redirectToRoute('show_group', array('id' => $id));
+            }
+    
+            $em->remove($group);
+            $em->flush();
+        
+            return $this->redirectToRoute('group_list');
+        }
     }
 
     /**
