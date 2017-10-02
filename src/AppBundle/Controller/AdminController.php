@@ -338,6 +338,9 @@ class AdminController extends Controller
                         'No user found for id '.$id
                     );
                 }
+
+                $em->remove($user);
+                $em->flush();
                 
                 return $this->redirectToRoute('user_list');
             }
