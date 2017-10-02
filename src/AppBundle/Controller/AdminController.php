@@ -356,21 +356,58 @@ class AdminController extends Controller
     */
     public function removeFromGroupAction($id, Request $request)
     {
+        $normalizers = new ObjectNormalizer();
+        
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(Users::class)->find($id);
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$id
-            );
+        // get api argument value
+        $api = $request->query->get('api');
+        
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+            $response = new Response();
+            
+            if (!$user) {
+                $message = 'No user found for id '.$id;
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+            }
+            else
+            {
+                $user->setGroup(null);
+                
+                $em->persist($user);
+                $em->flush();
+
+                $message = 'User deleted from the group';
+                $response->setStatusCode(Response::HTTP_OK);
+            }
+
+            $jsonContent = $serializer->serialize(array('status'=>$message), 'json');
+            $response->setContent($jsonContent);
+            $response->headers->set('Content-Type', 'application/json');
+            
+            return $response;
         }
+        else
+        {
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'No user found for id '.$id
+                );
+            }
 
-        $user->setGroup(null);
-
-        $em->persist($user);
-        $em->flush();
-
-        return $this->redirectToRoute('user_list');
-
+            $user->setGroup(null);
+            
+            $em->persist($user);
+            $em->flush();
+    
+            return $this->redirectToRoute('user_list');
+        }
     }
 }
