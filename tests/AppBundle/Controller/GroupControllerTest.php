@@ -30,4 +30,22 @@ class GroupControllerTest extends WebTestCase
         $this->assertEquals('AppBundle\Controller\GroupController::addAction', $client->getRequest()->attributes->get('_controller'));
     }
 
+    public function testShowGroup()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/group');
+
+        $link = $crawler->filter('a')->last()->link();
+
+        var_dump($link);
+        
+        // $crawler = $client->click($link);
+
+        // $this->assertContains(
+        //     'Elmar',
+        //     $client->getResponse()->getContent()
+        // );
+    }
+
 }
