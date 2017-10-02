@@ -286,31 +286,75 @@ class GroupController extends Controller
     public function deleteAction($id, Request $request)
     {
         // only allow deleting via post request
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST')) 
+        {
+            $normalizers = new ObjectNormalizer();
+    
+            $encoders = new JsonEncoder();
+            
+            $serializer = new Serializer(array($normalizers), array($encoders));
+
             $em = $this->getDoctrine()->getEntityManager();
             $group = $em->getRepository(Groups::class)->find($id);
             $users = $em->getRepository(Users::class)->findBy(['group'=>$group]);
-    
-            if (!$group) {
-                throw $this->createNotFoundException(
-                    'No group found for id '.$group_id
-                );
-            }
-    
             $usersInTheGroup = count($users);
-            if($usersInTheGroup != 0){
-                $this->addFlash(
-                    'notice',
-                    'You can not delete a group if it has users belonging to it!'
-                );
+
+            // get api argument value
+            $api = $request->query->get('api');
+            
+            // if $api is set and is true, show as json
+            if(!is_null($api) && $api == 'true')
+            {
+                $response = new Response();
+                
+                if (!$group) {
+                    $message = 'No group found for id '.$id;
+                    $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+                }
+                else
+                {
+                    if($usersInTheGroup != 0){
+                        $message = 'You can not delete a group if it has users belonging to it!';
+                        $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+                    }
+                    else
+                    {
+                        $em->remove($group);
+                        $em->flush();
     
-                return $this->redirectToRoute('show_group', array('id' => $id));
+                        $message = 'Deleted';
+                        $response->setStatusCode(Response::HTTP_OK);
+                    }
+                }
+
+                $jsonContent = $serializer->serialize(array('status'=>$message), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                
+                return $response;
             }
-    
-            $em->remove($group);
-            $em->flush();
+            else
+            {
+                if (!$group) {
+                    throw $this->createNotFoundException(
+                        'No group found for id '.$group_id
+                    );
+                }
         
-            return $this->redirectToRoute('group_list');
+                if($usersInTheGroup != 0){
+                    $this->addFlash(
+                        'notice',
+                        'You can not delete a group if it has users belonging to it!'
+                    );
+        
+                    return $this->redirectToRoute('show_group', array('id' => $id));
+                }
+        
+                $em->remove($group);
+                $em->flush();
+            
+                return $this->redirectToRoute('group_list');
+            }
         }
     }
 

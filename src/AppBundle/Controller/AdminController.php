@@ -288,8 +288,8 @@ class AdminController extends Controller
     public function deleteAction($id, Request $request)
     {
         // only allow deleting via post request
-        if ($request->isMethod('POST')) {
-
+        if ($request->isMethod('POST')) 
+        {
             $normalizers = new ObjectNormalizer();
     
             $encoders = new JsonEncoder();
