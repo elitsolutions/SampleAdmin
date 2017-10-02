@@ -38,17 +38,15 @@ class GroupControllerTest extends WebTestCase
 
         $link = $crawler->filter('a.show_group')->last()->link();
         $text = $crawler->filter('a.show_group')->last()->text();
-
-        var_dump($text);
         
-        // $crawler = $client->click($link);
+        $crawler = $client->click($link);
 
         // $this->assertEquals('AppBundle\Controller\GroupController::showAction', $client->getRequest()->attributes->get('_controller'));
 
-        // $this->assertContains(
-        //     'Elmar',
-        //     $client->getResponse()->getContent()
-        // );
+        $this->assertContains(
+            $text,
+            $client->getResponse()->getContent()
+        );
     }
 
 }
