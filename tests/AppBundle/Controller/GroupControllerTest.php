@@ -54,7 +54,7 @@ class GroupControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/group');
         
         $link = $crawler->filter('a.edit_group')->last()->attr('href');
-        $text = $crawler->filter('a.edit_group')->last()->text();
+        $text = $crawler->filter('a.show_group')->last()->text();
 
         $crawler = $client->request('GET', $link);
 
