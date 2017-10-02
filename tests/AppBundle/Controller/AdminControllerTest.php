@@ -69,26 +69,18 @@ class AdminControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // $client->request(
-        //     'POST',
-        //     '/user/delete/111',
-        //     $this->postData,
-        //     array(),
-        //     array('CONTENT_TYPE' => 'application/json')
-        // );
-
         $crawler = $client->request('GET', '/user');
 
+        $lastDeleteFormAction = $crawler->filter('form')->last()->attr('action');
         
-        $form = $crawler->filter('form')->last()->attr('action');
-        
-        // $link = $crawler->filter('form')->eq($deleteBtnCount-1);
+        $client->request(
+            'POST',
+            $lastDeleteFormAction,
+            array(),
+            array(),
+            array()
+        );
 
-        var_dump($form);
-
-        // $crawler = $client->click($link);
-
-        // $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
-
+        $this->assertEquals('AppBundle\Controller\AdminController::deleteAction', $client->getRequest()->attributes->get('_controller'));
     }
 }
