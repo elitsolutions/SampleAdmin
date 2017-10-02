@@ -83,7 +83,7 @@ class AdminControllerTest extends WebTestCase
         
         $link = $crawler->filter('form')->eq($deleteBtnCount-1);
 
-        var_dump($link);
+        var_dump($link->attributes);
 
         // $crawler = $client->click($link);
 
