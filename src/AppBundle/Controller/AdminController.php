@@ -297,6 +297,7 @@ class AdminController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(Users::class)->find($id);
+            var_dump($user);
             $em->remove($user);
             $em->flush();
 
@@ -313,7 +314,7 @@ class AdminController extends Controller
             if(!is_null($api) && $api == 'true')
             {
                 $response = new Response();
-                
+
                 if (!$user) {
                     $message = 'No user found for id '.$id;
                     $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
