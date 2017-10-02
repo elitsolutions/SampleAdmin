@@ -294,7 +294,7 @@ class GroupController extends Controller
             
             $serializer = new Serializer(array($normalizers), array($encoders));
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $group = $em->getRepository(Groups::class)->find($id);
             $users = $em->getRepository(Users::class)->findBy(['group'=>$group]);
             $usersInTheGroup = count($users);
