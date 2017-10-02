@@ -75,15 +75,17 @@ class GroupControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/group');
 
         $lastDeleteFormAction = $crawler->filter('form')->last()->attr('action');
-        
-        $client->request(
-            'POST',
-            $lastDeleteFormAction,
-            array(),
-            array(),
-            array()
-        );
 
-        $this->assertEquals('AppBundle\Controller\GroupController::deleteAction', $client->getRequest()->attributes->get('_controller'));
+        var_dump($lastDeleteFormAction);
+        
+        // $client->request(
+        //     'POST',
+        //     $lastDeleteFormAction,
+        //     array(),
+        //     array(),
+        //     array()
+        // );
+
+        // $this->assertEquals('AppBundle\Controller\GroupController::deleteAction', $client->getRequest()->attributes->get('_controller'));
     }
 }
