@@ -296,10 +296,6 @@ class AdminController extends Controller
         if ($request->isMethod('POST')) {
 
             $normalizers = new ObjectNormalizer();
-            
-            // $normalizers->setCircularReferenceHandler(function ($object) {
-            //     return $object->getName();
-            // });
     
             $encoders = new JsonEncoder();
             
@@ -307,8 +303,6 @@ class AdminController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(Users::class)->find($id);
-            $em->remove($user);
-            $em->flush();
 
             if (!$user) {
                 throw $this->createNotFoundException(
@@ -330,6 +324,9 @@ class AdminController extends Controller
                 }
                 else
                 {
+                    $em->remove($user);
+                    $em->flush();
+                    
                     $message = 'Deleted';
                     $response->setStatusCode(Response::HTTP_OK);
                 }
