@@ -60,7 +60,7 @@ class GroupControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Save Group')->form();
 
-        $form['user[name]'] = $text.' edited';
+        $form['group[name]'] = $text.' edited';
 
         $client->submit($form);
 
