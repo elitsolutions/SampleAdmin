@@ -217,7 +217,6 @@ class AdminController extends Controller
             $formData = json_decode($request->getContent(), true);
             
             // check if we have required name key value
-
             if(isset($formData['name']) && !empty($formData['name']))
             {                
                 $em = $this->getDoctrine()->getManager();

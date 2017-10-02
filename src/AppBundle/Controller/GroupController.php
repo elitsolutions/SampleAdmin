@@ -180,30 +180,82 @@ class GroupController extends Controller
     */
     public function editAction($id, Request $request)
     {
+        $normalizers = new ObjectNormalizer();
+        
+        $normalizers->setCircularReferenceHandler(function ($object) {
+            return $object->getName();
+        });
+
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(Groups::class)->find($id);
-        $form = $this->createForm(GroupType::class, $user);
+        $group = $em->getRepository(Groups::class)->find($id);
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No group found for id '.$id
-            );
+        // get api argument value
+        $api = $request->query->get('api');
+        
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+            $formData = json_decode($request->getContent(), true);
+
+            // check if we have required name key value
+            if(isset($formData['name']) && !empty($formData['name']))
+            {                
+                $em = $this->getDoctrine()->getManager();
+
+                $group->setName($formData['name']);
+
+                $em->persist($group);
+                $em->flush();
+        
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'edited'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_OK);
+    
+                return $response;
+            }
+            else
+            {
+                // form is not valid
+                $response = new Response();
+                $jsonContent = $serializer->serialize(array('status'=>'something is missing'), 'json');
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+    
+                return $response;
+            }
         }
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $formData = $form->getData();
-            $em->persist($formData);
-            $em->flush();
-
-            return $this->redirectToRoute('group_list');
+        else
+        {
+            $form = $this->createForm(GroupType::class, $user);
+            
+            if (!$group) {
+                throw $this->createNotFoundException(
+                    'No group found for id '.$id
+                );
+            }
+    
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+    
+                $formData = $form->getData();
+                $em->persist($formData);
+                $em->flush();
+    
+                return $this->redirectToRoute('group_list');
+            }
+    
+            return $this->render('group/form.html.twig', array(
+                'form' => $form->createView()
+            ));
         }
-
-        return $this->render('group/form.html.twig', array(
-            'form' => $form->createView()
-        ));
     }
 
     /**
