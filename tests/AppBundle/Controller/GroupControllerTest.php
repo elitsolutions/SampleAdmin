@@ -36,8 +36,8 @@ class GroupControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/group');
 
-        $link = $crawler->filter('td > a')->last()->link();
-        $text = $crawler->filter('td > a')->last()->text();
+        $link = $crawler->filter('a.show_group')->last()->link();
+        $text = $crawler->filter('a.show_group')->last()->text();
 
         var_dump($text);
         
