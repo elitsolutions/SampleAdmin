@@ -53,7 +53,7 @@ class GroupControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/group');
         
-        $link = $crawler->filter('a.edit_group')->last()->link();
+        $link = $crawler->filter('a.edit_group')->last()->attr('href');
         $text = $crawler->filter('a.edit_group')->last()->text();
 
         var_dump($link);
