@@ -385,28 +385,68 @@ class GroupController extends Controller
     */
     public function AddUserToGroupAction($group_id, $user_id, Request $request)
     {
+        $normalizers = new ObjectNormalizer();
+        
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
         $em = $this->getDoctrine()->getManager();
         $group = $em->getRepository(Groups::class)->find($group_id);
         $user = $em->getRepository(Users::class)->find($user_id);
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$user_id
-            );
+        // get api argument value
+        $api = $request->query->get('api');
+        
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+            $response = new Response();
+            
+            if (!$group) {
+                $message = 'No group found for id '.$group_id;
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+            }
+
+            if (!$user) {
+                $message = 'No user found for id '.$user_id;
+                $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+            }
+
+            $user->setGroup($group);
+            
+            $em->persist($user);
+            $em->flush();
+
+            $message = 'User added to the group';
+            $response->setStatusCode(Response::HTTP_OK);
+
+            $jsonContent = $serializer->serialize(array('status'=>$message), 'json');
+            $response->setContent($jsonContent);
+            $response->headers->set('Content-Type', 'application/json');
+            
+            return $response;
         }
-
-        if (!$group) {
-            throw $this->createNotFoundException(
-                'No group found for id '.$group_id
-            );
+        else
+        {
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'No user found for id '.$user_id
+                );
+            }
+    
+            if (!$group) {
+                throw $this->createNotFoundException(
+                    'No group found for id '.$group_id
+                );
+            }
+    
+            $user->setGroup($group);
+    
+            $em->persist($user);
+            $em->flush();
+    
+            return $this->redirectToRoute('show_group', array('id' => $group_id));
         }
-
-        $user->setGroup($group);
-
-        $em->persist($user);
-        $em->flush();
-
-        return $this->redirectToRoute('show_group', array('id' => $group_id));
-
     }
 }
