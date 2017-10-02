@@ -312,6 +312,8 @@ class AdminController extends Controller
             // if $api is set and is true, show as json
             if(!is_null($api) && $api == 'true')
             {
+                $response = new Response();
+                
                 if (!$user) {
                     $message = 'No user found for id '.$id;
                     $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
@@ -322,7 +324,6 @@ class AdminController extends Controller
                     $response->setStatusCode(Response::HTTP_OK);
                 }
 
-                $response = new Response();
                 $jsonContent = $serializer->serialize(array('status'=>$message), 'json');
                 $response->setContent($jsonContent);
                 $response->headers->set('Content-Type', 'application/json');
