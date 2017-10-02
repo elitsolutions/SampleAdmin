@@ -19,14 +19,41 @@ class GroupController extends Controller
     /**
     * @Route("/group", name="group_list")
     */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        // find all users
+        $normalizers = new ObjectNormalizer();
+        
+        $normalizers->setCircularReferenceHandler(function ($object) {
+            return $object->getName();
+        });
+
+        $encoders = new JsonEncoder();
+        
+        $serializer = new Serializer(array($normalizers), array($encoders));
+
+        // get api argument value
+        $api = $request->query->get('api');
+
+        // find all groups
         $groups = $this->getDoctrine()->getRepository(Groups::class)->findAll();
 
-        return $this->render('group/index.html.twig', array(
-            'groups' => $groups
-        ));
+        // if $api is set and is true, show as json
+        if(!is_null($api) && $api == 'true')
+        {
+            $response = new Response();
+            $jsonContent = $serializer->serialize($groups, 'json');
+            $response->setContent($jsonContent);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_OK);
+
+            return $response;
+        }
+        else
+        {
+            return $this->render('group/index.html.twig', array(
+                'groups' => $groups
+            ));
+        }
     }
 
     /**
