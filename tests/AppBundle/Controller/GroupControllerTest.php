@@ -74,7 +74,7 @@ class GroupControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/group');
 
-        $lastDeleteForm = $crawler->filter('form')->last();
+        $lastDeleteForm = $crawler->filter('form')->last()->form();
 
         $client->submit($lastDeleteForm);
         
