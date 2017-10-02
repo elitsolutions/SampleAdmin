@@ -13,7 +13,7 @@
     <tbody>
         {% for group in groups %}
             <tr>
-                <td><a href="{{ path('show_group', {'id': group.id}) }}">{{ group.name }}</a></td>
+                <td><a class="show_group" href="{{ path('show_group', {'id': group.id}) }}">{{ group.name }}</a></td>
                 <td><a href="{{ path('edit_group', {'id': group.id}) }}">Edit</a></td>
                 <td>
                     <form  action="{{ path('delete_group', {'id': group.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete the group?')">
